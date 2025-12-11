@@ -27,15 +27,30 @@ const userRouter = require("./routes/user");
 const chatRouter = require("./routes/chat");
 const messageRouter = require("./routes/message");
 
+
+async function main() {
+  try {
+    const uri = process.env.MONGODB_URI;
+
+    if (!uri) {
+      throw new Error("❌ MONGODB_URI is missing. Did you load your .env file?");
+    }
+
+    console.log("MONGODB_URI loaded successfully");
+
+    await mongoose.connect(uri);
+    console.log("✅ MongoDB connected!");
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  }
+}
+
 // Connect to Database
 main()
 	.then(() => console.log("Database Connection established"))
 	.catch((err) => console.log(err));
 
-async function main() {
-	console.log(process.env.MONGODB_URI)
-	await mongoose.connect(process.env.MONGODB_URI);
-}
 
 // Root route
 app.get("/", (req, res) => {
