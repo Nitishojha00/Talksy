@@ -76,10 +76,17 @@ const server = app.listen(PORT, async () => {
 // Socket.IO setup
 const { Server } = require("socket.io");
 const io = new Server(server, {
-	pingTimeout: 60000,
-	transports: ["websocket"],
-	cors: corsOptions,
+    cors: {
+        origin: corsOptions.origin,   // same as your frontend URL
+        methods: ["GET", "POST"],
+    },
+    transports: ["websocket", "polling"], // allow fallback (important)
+    pingInterval: 25000,   // send ping every 25 sec
+    pingTimeout: 60000,    // wait 60 sec before disconnect
+    allowEIO3: true,       // supports older clients (prevents random disconnects)
 });
+
+
 
 // Socket connection
 io.on("connection", (socket) => {
