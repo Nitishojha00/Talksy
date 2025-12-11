@@ -29,21 +29,12 @@ const messageRouter = require("./routes/message");
 
 
 async function main() {
-  try {
-    const uri = process.env.MONGODB_URI;
-
-    if (!uri) {
-      throw new Error("❌ MONGODB_URI is missing. Did you load your .env file?");
-    }
-
-    console.log("MONGODB_URI loaded successfully");
-
-    await mongoose.connect(uri);
-    console.log("✅ MongoDB connected!");
-  } catch (err) {
-    console.error("MongoDB connection error:", err.message);
-    process.exit(1);
-  }
+  mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.log("Mongo ERROR →", err));
 }
 
 // Connect to Database
