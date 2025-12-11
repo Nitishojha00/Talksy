@@ -95,7 +95,7 @@ const Footer = () => {
 					<span>
 						<a
 							className="hover:text-blue-600 hover:underline"
-							href="mailto:contact.nitishojha00@gmail.com"
+							href="mailto:nitishojha00@gmail.com"
 							target="_blank"
 							rel="noreferrer"
 						>
