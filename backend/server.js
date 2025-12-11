@@ -8,7 +8,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://talksy-chi.vercel.app"
+  "https://talksy-chi.vercel.app",
+  "https://talksy-hp448t9xi-nitish-ojhas-projects.vercel.app"
 ];
 
 const corsOptions = {
