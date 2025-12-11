@@ -17,11 +17,11 @@ const Footer = () => {
 					<span>Pincode - 273016</span>
 					<span>
 						<Link
-							to={"mailto:contact.nitishojha00@gmail.com"}
+							to={"mailto:nitishojha00@gmail.com"}
 							target="_blank"
 							className="hover:text-blue-600 hover:underline"
 						>
-							contact.nitishojha00@gmail.com
+							nitishojha00@gmail.com
 						</Link>
 					</span>
 				</div>
