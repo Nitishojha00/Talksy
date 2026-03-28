@@ -8,7 +8,7 @@ const registerUser = async (req, res, next) => {
 	if (existingUser) {
 		return res.status(400).json({ message: `User Already Exist` });
 	}
-	password = bcrypt.hashSync(password, 8);
+	password = bcrypt.hashSync(password, 8); // random salt use krrha hai, 8 rounds of hashing
 	const userData = new User({
 		firstName,
 		lastName,
