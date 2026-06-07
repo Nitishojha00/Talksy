@@ -8,7 +8,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://talksy.nitishojha.in"
+  process.env.FRONTEND_URL,
 ];
 
 const corsOptions = {
