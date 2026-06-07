@@ -39,6 +39,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const chatRouter = require("./routes/chat");
 const messageRouter = require("./routes/message");
+const aiChatRouter = require("./routes/aiChat");
 
 
 async function main() {
@@ -69,6 +70,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
+app.use("/api/ai", aiChatRouter);
 
 // Invaild routes
 app.all("*", (req, res) => {
