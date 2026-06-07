@@ -18,6 +18,9 @@ const MessageSend = ({ chatId }) => {
 	// const [mediaURL, setMediaURL] = useState("");
 	const [newMessage, setMessage] = useState("");
 	const dispatch = useDispatch();
+	const authUserId = useSelector(
+	(store) => store?.auth?._id
+	);
 	const isSendLoading = useSelector(
 		(store) => store?.condition?.isSendLoading
 	);
@@ -51,9 +54,73 @@ const MessageSend = ({ chatId }) => {
 	//     setMediaURL("");
 	//     setMediaBox(false);
 	// };
+	const handleAISendMessage = async () => {
+		const message = newMessage?.trim();
+
+		if (!message) return;
+
+		setMessage("");
+		dispatch(setSendLoading(true));
+		const token = localStorage.getItem("token");
+		dispatch(
+			addNewMessage({
+				_id: Date.now().toString(),
+				message,
+				sender: {
+					_id: authUserId,
+				},
+				updatedAt: new Date().toISOString(),
+				chat: {
+					_id: "ai-assistant",
+				},
+			})
+		);
+
+		try {
+			
+			const res = await fetch(
+				`${import.meta.env.VITE_BACKEND_URL}/api/ai/chat`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						message,
+					}),
+				}
+			);
+
+			const json = await res.json();
+
+			dispatch(
+				addNewMessage({
+					_id: (Date.now() + 1).toString(),
+					message: json.reply,
+					sender: {
+						_id: "ai-assistant",
+					},
+					updatedAt: new Date().toISOString(),
+					chat: {
+						_id: "ai-assistant",
+					},
+				})
+			);
+		} catch (err) {
+			console.log(err);
+			toast.error("AI response failed");
+		}
+
+		dispatch(setSendLoading(false));
+	};
 
 	// Send Message Api call
 	const handleSendMessage = async () => {
+		
+		if (chatId === "ai-assistant") {
+		return handleAISendMessage();
+		}
 		if (newMessage?.trim()) {
 			const message = newMessage?.trim();
 			setMessage("");

@@ -31,6 +31,56 @@ const MessageBox = ({ chatId }) => {
 	const authUserId = useSelector((store) => store?.auth?._id);
 
 	useEffect(() => {
+
+			if (chatId === "ai-assistant") {
+			dispatch(setMessageLoading(true));
+
+			const token = localStorage.getItem("token");
+
+			fetch(
+				`${import.meta.env.VITE_BACKEND_URL}/api/ai/history`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+				.then((res) => res.json())
+				.then((json) => {
+
+					const messages =
+						json.messages.map((msg) => ({
+							_id: msg._id,
+
+							message: msg.content,
+
+							sender: {
+								_id:
+									msg.role === "user"
+										? authUserId
+										: "ai-assistant",
+							},
+
+							updatedAt: msg.createdAt,
+
+							chat: {
+								_id: "ai-assistant",
+							},
+						}));
+
+					dispatch(addAllMessages(messages));
+					dispatch(setMessageLoading(false));
+				})
+				.catch((err) => {
+					console.log(err);
+					dispatch(setMessageLoading(false));
+				});
+
+			return;
+		}
+
 		const getMessage = (chatId) => {
 			dispatch(setMessageLoading(true));
 			const token = localStorage.getItem("token");

@@ -11,6 +11,16 @@ import getChatName, { getChatImage } from "../../utils/getChatName";
 import { VscCheckAll } from "react-icons/vsc";
 import { SimpleDateAndTime, SimpleTime } from "../../utils/formateDateTime";
 
+
+const aiChat = {
+    _id: "ai-assistant",
+    chatName: "🤖 Talksy AI",
+    isGroupChat: false,
+    users: [],
+    latestMessage: null,
+};
+
+
 const MyChat = () => {
     const dispatch = useDispatch();
     const myChat = useSelector((store) => store.myChat.chat);
@@ -36,11 +46,11 @@ const MyChat = () => {
             })
                 .then((res) => res.json())
                 .then((json) => {
-                    dispatch(addMyChat(json?.data || []));
+                    dispatch(addMyChat([aiChat, ...(json?.data || [])]));
                     dispatch(setChatLoading(false));
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err);                               
                     dispatch(setChatLoading(false));
                 });
         };
@@ -142,5 +152,7 @@ const MyChat = () => {
         </>
     );
 };
+
+
 
 export default MyChat;

@@ -19,7 +19,7 @@ body::-webkit-scrollbar-thumb,
 .scroll-style::-webkit-scrollbar-thumb {
 	width: 3px;
 	border-radius: 50px;
-	background-color: #1e293b;
+	background-color: #212224;
 	box-shadow: inset 0px 0px 2px white;
 }
 
@@ -31,7 +31,7 @@ body::-webkit-scrollbar-thumb,
 .scroll-style-x::-webkit-scrollbar-thumb {
 	height: 1px;
 	border-radius: 50px;
-	background-color: #1e293b;
+	background-color: #212224;
 	box-shadow: inset 0px 0px 2px white;
 }
 
@@ -81,9 +81,9 @@ body {
 	background: linear-gradient(
 		to right,
 		#334155,
-		#1e293b,
+		#212224,
 		#334155,
-		#1e293b,
+		#212224,
 		#334155
 	);
 	background-size: 200% 100%;
